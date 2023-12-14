@@ -59,14 +59,17 @@ function AnalysisProject() {
                         datasets: [{
                             data: data,
                             backgroundColor: [
-                                'black',
+                                'rgba(255, 99, 132, 1.2)',
+                                'rgba(255, 159, 64, 1.2)',
+                                'rgba(255, 205, 86, 1.2)',
+                                'rgba(75, 192, 202, 1.2)',
+                                'rgba(54, 162, 235, 1.2)',
+                                'rgba(153, 102, 255, 1.2)',
+                                'rgba(201, 203, 207, 1.2)',
+                                'lightgreen',
+                                'lightblue',
                                 'orange',
-                                'red',
-                                'blue',
-                                'yellow',
-                                'green',
-                                'gray',
-                                'pink'
+                                'lightred'
                             ]
                         }
                         ],
@@ -113,6 +116,35 @@ function AnalysisProject() {
         }
         getAllProjects();
     }, [])
+
+    const handleDownloadCSV = async () => {
+        try {
+          const res = await fetch("http://localhost:3218/getAllProjects", {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            }
+          });
+          const dataa = await res.json();
+    
+          // Create a CSV string
+          const csvContent = "data:text/csv;charset=utf-8," +
+            "Project Title,Work Time\n" +
+            dataa.map(project => `${project.projectTitle},${project.workTime / 3600}`).join("\n");
+    
+          // Create a data URI and create a link element to trigger the download
+          const encodedUri = encodeURI(csvContent);
+          const link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", "projects.csv");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } catch (err) {
+          console.log('err in downloading CSV :>> ', err);
+        }
+      };
 
     return (
         <>

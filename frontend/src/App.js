@@ -13,6 +13,7 @@ import Register from "./components/Register";
 import ResetPassword from "./components/ResetPassword";
 import Dum from "./components/Dummy";
 import Dummy2 from "./components/Dummy2";
+import About from "./components/About";
 
 function App() {
 
@@ -147,6 +148,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/dummy" element={<Dum />} />
             <Route path="/dummy2" element={<Dummy2 />} />
+            <Route path="/about" element={<About />} />
             <Route
               path="/resetPassword/:person/:idd"
               element={<ResetPassword />}
